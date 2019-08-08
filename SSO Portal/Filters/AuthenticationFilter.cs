@@ -12,7 +12,7 @@ namespace SSO_Portal.Filters
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             var token = actionContext.Request.Headers.Authorization.Parameter;
-            var principle = authenticationService.AuthenticateJwtToken(token);
+           // var principle = authenticationService.AuthenticateJwtToken(token);
             
 
 
