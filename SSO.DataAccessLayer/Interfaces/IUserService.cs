@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace SSO.DataAccessLayer.Interfaces
 {
-   public interface IUserService
+    public interface IUserService
     {
-        IList<UserDetailsModel> GetListOfApplication(string userId);
+        IList<Application> GetApplications(string userId);
+
+        string GetUserId(string oktaAccessToken);
     }
 }

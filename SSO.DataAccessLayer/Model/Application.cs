@@ -2,9 +2,9 @@
 
 namespace SSO.DataAccessLayer.Model
 {
-    public class UserDetailsModel
+    public class Application
     {
-        [ JsonProperty("id") ] 
+        [JsonProperty("id")]
         public string ApplicationId { get; set; }
 
         [JsonProperty("label")]
@@ -14,7 +14,7 @@ namespace SSO.DataAccessLayer.Model
         public string LinkUrl { get; set; }
 
         [JsonProperty("logoUrl")]
-        public string logoUrl { get; set; }
+        public string LogoUrl { get; set; }
 
         [JsonProperty("appName")]
         public string AppName { get; set; }

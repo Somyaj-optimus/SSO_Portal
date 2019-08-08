@@ -1,5 +1,7 @@
-﻿using SSO.DataAccessLayer.Interfaces;
+﻿using SSO.DataAccessLayer.Constants;
+using SSO.DataAccessLayer.Interfaces;
 using System;
+using System.Diagnostics;
 using System.Web.Http;
 
 namespace SSO_Portal.Controllers
@@ -14,13 +16,13 @@ namespace SSO_Portal.Controllers
         {
             _user = userServices;
         }
-        
+
 
         #region ListOfApplication 
         /// <summary>
         /// To find the list of Application
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">userId</param>
         /// <returns></returns>
         /// 
         [HttpGet]
@@ -30,14 +32,15 @@ namespace SSO_Portal.Controllers
             {
                 if (!userId.Equals(null))
                 {
-                    var list = _user.GetListOfApplication(userId);
+                    var list = _user.GetApplications(userId);
                     return Ok(list);
                 }
                 return BadRequest("Invalid Id");
             }
-            catch(Exception ex)
+            catch (Exception exception)
             {
-                return NotFound();
+                Debug.WriteLine(exception.Message);
+                return BadRequest(ApiConstant.SomethingWrong);
             }
         }
 

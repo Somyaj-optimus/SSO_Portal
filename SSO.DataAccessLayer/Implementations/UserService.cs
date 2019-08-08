@@ -3,6 +3,7 @@ using SSO.DataAccessLayer.Interfaces;
 using SSO.DataAccessLayer.Model;
 using System.Collections.Generic;
 using System.Net.Http;
+using static SSO.DataAccessLayer.Constants.ApiConstant;
 
 namespace SSO.DataAccessLayer.Implementations
 {
@@ -10,7 +11,7 @@ namespace SSO.DataAccessLayer.Implementations
     {
         #region Private Fields
 
-        private readonly string token = "00aV-lNOo6y5DkdFfBH7CDuNKxj5OIc4Mw-PM_D_VV";
+        private readonly HttpClient _client = new HttpClient();
 
         #endregion
 
@@ -20,15 +21,29 @@ namespace SSO.DataAccessLayer.Implementations
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IList<UserDetailsModel> GetListOfApplication(string userId)
+        public IList<Application> GetApplications(string userId)
         {
-            string url = $"https://optimusinfo-deepaknegi.okta.com/api/v1/users/{userId}/appLinks";
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Authorization","SSWS " +token);
-            var GetRequestResponse = client.GetAsync(url).Result;
+            string url = $"{OrganizationDomain}/api/v1/users/{userId}/appLinks";
+            _client.DefaultRequestHeaders.Add(Authorization, SSWS + SSWSToken);
+            var GetRequestResponse = _client.GetAsync(url).Result;
             var json = GetRequestResponse.Content.ReadAsStringAsync().Result;
-            var value = JsonConvert.DeserializeObject<List<UserDetailsModel>>(json);
+            var value = JsonConvert.DeserializeObject<List<Application>>(json);
             return value;
+        }
+
+        /// <summary>
+        /// Fetch user id from Access token
+        /// </summary>
+        /// <param name="oktaAccessToken">okta access token</param>
+        /// <returns> User id</returns>
+        public string GetUserId(string oktaAccessToken)
+        {
+            string userInfoApi = $"{OrganizationDomain}{UserInfo}";
+            _client.DefaultRequestHeaders.Add(Authorization, Bearer + oktaAccessToken);
+            var response = _client.GetAsync(userInfoApi).Result;
+            string content = response.Content.ReadAsStringAsync().Result;
+            User user = JsonConvert.DeserializeObject<User>(content);
+            return user.Id;
         }
         #endregion
 
