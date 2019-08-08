@@ -13,9 +13,6 @@ namespace SSO_Portal.Filters
         {
             var token = actionContext.Request.Headers.Authorization.Parameter;
             var principle = authenticationService.AuthenticateJwtToken(token);
-            
-
-
         }
     }
 }

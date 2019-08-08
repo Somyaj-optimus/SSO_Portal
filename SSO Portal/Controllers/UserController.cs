@@ -1,11 +1,13 @@
 ﻿using SSO.DataAccessLayer.Constants;
 using SSO.DataAccessLayer.Interfaces;
+using SSO_Portal.Filters;
 using System;
 using System.Diagnostics;
 using System.Web.Http;
 
 namespace SSO_Portal.Controllers
 {
+    [AuthenticationFilter]
     public class UserController : ApiController
     {
         #region Private Field
