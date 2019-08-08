@@ -30,12 +30,14 @@ namespace SSO_Portal.Controllers
         {
             try
             {
-                if (!userId.Equals(null))
-                {
-                    var list = _user.GetApplications(userId);
-                    return Ok(list);
-                }
-                return BadRequest("Invalid Id");
+                if (string.IsNullOrWhiteSpace(userId))
+                    return NotFound();
+
+                var applications = _user.GetApplications(userId);
+                if (applications.Count > 0)
+                    return Ok(applications);
+                return NotFound();
+
             }
             catch (Exception exception)
             {

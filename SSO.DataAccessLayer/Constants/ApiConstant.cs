@@ -21,7 +21,7 @@ namespace SSO.DataAccessLayer.Constants
 
         #region Error Message
 
-        public const string ArgumentNull = "Please provide an user id";
+        public const string ArgumentNull = "Please provide an access token";
         public const string SomethingWrong = "Something went wrong";
 
         #endregion
