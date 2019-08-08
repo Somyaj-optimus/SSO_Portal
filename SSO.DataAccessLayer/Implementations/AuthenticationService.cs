@@ -1,9 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using SSO.DataAccessLayer.Interfaces;
+﻿using SSO.DataAccessLayer.Interfaces;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace SSO.DataAccessLayer.Implementations
 {
@@ -39,32 +37,6 @@ namespace SSO.DataAccessLayer.Implementations
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
             return tokenString;
-        }
-
-        public ClaimsPrincipal AuthenticateJwtToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var validationParameters = GetValidationParameters();
-
-            SecurityToken validatedToken;
-            var principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
-
-            return principal;
-        }
-
-        /// <summary>
-        /// Get token Validation Parameters
-        /// </summary>
-        /// <returns></returns>
-        private TokenValidationParameters GetValidationParameters()
-        {
-            return new TokenValidationParameters()
-            {
-                ValidateLifetime = false, // Because there is no expiration in the generated token
-                ValidateAudience = false, // Because there is no audiance in the generated token
-                ValidateIssuer = false,   // Because there is no issuer in the generated token
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)) // The same key as the one that generate the token
-            };
         }
 
         #endregion

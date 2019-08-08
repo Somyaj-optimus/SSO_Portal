@@ -30,14 +30,19 @@ namespace SSO_Portal.Controllers
         [HttpGet]
         public IHttpActionResult ListOfApplication(string userId)
         {
+            Request.Properties.TryGetValue("userId", out object userid);
+
             try
             {
                 if (string.IsNullOrWhiteSpace(userId))
+                {
                     return NotFound();
-
+                }
                 var applications = _user.GetApplications(userId);
                 if (applications.Count > 0)
+                {
                     return Ok(applications);
+                }
                 return NotFound();
 
             }
