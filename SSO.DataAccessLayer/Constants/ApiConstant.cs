@@ -28,7 +28,7 @@ namespace SSO.DataAccessLayer.Constants
 
         #region Common
         public const string Authorization = "Authorization";
-        public const string Bearer = "Bearer";
+        public const string Bearer = "Bearer ";
         public const string SSWS = "SSWS";
         #endregion
     }
