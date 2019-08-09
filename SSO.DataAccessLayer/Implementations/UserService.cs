@@ -32,7 +32,7 @@ namespace SSO.DataAccessLayer.Implementations
         public IList<Application> GetApplications(string userId)
         {
             string url = $"{OrganizationDomain}/api/v1/users/{userId}/appLinks";
-            _client.DefaultRequestHeaders.Add(Authorization, SSWS + SSWSToken);
+            _client.AddHeader(Authorization, SSWS + SSWSToken);
             var response = _client.GetAsync(url).Result;
             if (response.IsSuccessStatusCode)
             {
