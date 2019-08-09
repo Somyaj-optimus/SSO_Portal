@@ -1,5 +1,4 @@
-﻿
-namespace SSO.DataAccessLayer.Interfaces
+﻿namespace SSO.DataAccessLayer.Interfaces
 {
    public interface IAuthenticationService
     {

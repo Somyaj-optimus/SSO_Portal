@@ -28,10 +28,9 @@ namespace SSO_Portal.Controllers
         /// <returns></returns>
         /// 
         [HttpGet]
-        public IHttpActionResult ListOfApplication(string userId)
+        public IHttpActionResult GetAssignedApplications(string userId)
         {
             Request.Properties.TryGetValue("userId", out object userid);
-
             try
             {
                 if (string.IsNullOrWhiteSpace(userId))

@@ -78,7 +78,7 @@ namespace SSO_Portal.Filters
                 ValidateLifetime = true, 
                 ValidateAudience = false, // Because there is no audiance in the generated token
                 ValidateIssuer = false,   // Because there is no issuer in the generated token
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)) // The same key as the one that generate the token
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secret)) // The same key as the one that generate the token
             };
         }
     }

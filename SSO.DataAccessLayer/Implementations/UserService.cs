@@ -2,6 +2,7 @@
 using SSO.DataAccessLayer.Interfaces;
 using SSO.DataAccessLayer.Model;
 using System.Collections.Generic;
+using System.Net.Http;
 using static SSO.DataAccessLayer.Constants.ApiConstant;
 
 namespace SSO.DataAccessLayer.Implementations
@@ -10,16 +11,7 @@ namespace SSO.DataAccessLayer.Implementations
     {
         #region Private Fields
 
-        private readonly IHttpHandler _client;
-
-        #endregion
-
-        #region Constructor 
-
-        public UserService(IHttpHandler httpHandler)
-        {
-            _client = httpHandler;
-        }
+        private readonly HttpClient _client = new HttpClient();
 
         #endregion
 
@@ -32,7 +24,7 @@ namespace SSO.DataAccessLayer.Implementations
         public IList<Application> GetApplications(string userId)
         {
             string url = $"{OrganizationDomain}/api/v1/users/{userId}/appLinks";
-            _client.AddHeader(Authorization, SSWS + SSWSToken);
+            _client.DefaultRequestHeaders.Add(Authorization, SSWS + SSWSToken);
             var response = _client.GetAsync(url).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -51,7 +43,7 @@ namespace SSO.DataAccessLayer.Implementations
         public string GetUserId(string oktaAccessToken)
         {
             string userInfoApi = $"{OrganizationDomain}{UserInfo}";
-            _client.AddHeader(Authorization, Bearer + oktaAccessToken);
+            _client.DefaultRequestHeaders.Add(Authorization, Bearer + oktaAccessToken);
             var response = _client.GetAsync(userInfoApi).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -62,7 +54,6 @@ namespace SSO.DataAccessLayer.Implementations
             return null;
         }
         #endregion
-
     }
 }
 
