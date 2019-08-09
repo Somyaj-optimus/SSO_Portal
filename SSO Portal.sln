@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSO.DataAccessLayer", "SSO.DataAccessLayer\SSO.DataAccessLayer.csproj", "{FE83A5E6-923E-4031-8C9E-7F509A1248DC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{D55D7B52-147A-4201-9BB0-E580CB267D8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{C0881D0A-CDB8-4C21-8693-388C7A447C55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +27,17 @@ Global
 		{FE83A5E6-923E-4031-8C9E-7F509A1248DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE83A5E6-923E-4031-8C9E-7F509A1248DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE83A5E6-923E-4031-8C9E-7F509A1248DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0881D0A-CDB8-4C21-8693-388C7A447C55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0881D0A-CDB8-4C21-8693-388C7A447C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0881D0A-CDB8-4C21-8693-388C7A447C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0881D0A-CDB8-4C21-8693-388C7A447C55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FE83A5E6-923E-4031-8C9E-7F509A1248DC} = {9DDD6AB6-07C4-46E0-97C4-0026B70210D1}
+		{C0881D0A-CDB8-4C21-8693-388C7A447C55} = {D55D7B52-147A-4201-9BB0-E580CB267D8C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45DF6002-89E8-4B91-B867-145D1E905100}
