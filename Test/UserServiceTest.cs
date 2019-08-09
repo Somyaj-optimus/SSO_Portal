@@ -20,6 +20,7 @@ namespace Tests
 
         string accessToken = "ejydufjcndlfsfj6clmcw246vdhsofnsf632dfsdfsdgsfasf";
         #endregion
+
         [SetUp]
         public void Setup()
         {

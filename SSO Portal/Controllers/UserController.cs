@@ -28,16 +28,16 @@ namespace SSO_Portal.Controllers
         /// <returns></returns>
         /// 
         [HttpGet]
-        public IHttpActionResult GetAssignedApplications(string userId)
+        public IHttpActionResult GetAssignedApplications()
         {
-            Request.Properties.TryGetValue("userId", out object userid);
             try
             {
-                if (string.IsNullOrWhiteSpace(userId))
+                Request.Properties.TryGetValue("userId", out object userId);
+                if (string.IsNullOrWhiteSpace(userId.ToString()))
                 {
                     return NotFound();
                 }
-                var applications = _user.GetApplications(userId);
+                var applications = _user.GetApplications(userId.ToString());
                 if (applications.Count > 0)
                 {
                     return Ok(applications);

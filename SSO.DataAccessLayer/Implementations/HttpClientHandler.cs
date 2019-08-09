@@ -8,14 +8,14 @@ namespace SSO.DataAccessLayer.Implementations
     {
         private readonly HttpClient _client = new HttpClient();
 
-        public async Task<HttpResponseMessage> GetAsync(string url)
+        public HttpResponseMessage GetAsync(string url)
         {
-            return await _client.GetAsync(url);
+            return  _client.GetAsync(url).Result;
         }
 
-        public async Task<HttpResponseMessage> PostAsync(string url, HttpContent content)
+        public HttpResponseMessage PostAsync(string url, HttpContent content)
         {
-            return await _client.PostAsync(url, content);
+            return  _client.PostAsync(url, content).Result;
         }
 
         public void AddHeader(string key, string value)

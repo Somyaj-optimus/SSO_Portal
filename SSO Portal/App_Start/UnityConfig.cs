@@ -45,6 +45,7 @@ namespace SSO_Portal
             // TODO: Register your type's mappings here.
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IAuthenticationService, AuthenticationService>();
+            container.RegisterType<IHttpHandler, HttpClientHandler>();
         }
     }
 }

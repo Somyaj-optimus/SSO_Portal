@@ -5,8 +5,8 @@ namespace SSO.DataAccessLayer.Interfaces
 {
     public interface IHttpHandler
     {
-        Task<HttpResponseMessage> GetAsync(string url);
-        Task<HttpResponseMessage> PostAsync(string url, HttpContent content);
+        HttpResponseMessage GetAsync(string url);
+        HttpResponseMessage PostAsync(string url, HttpContent content);
         void AddHeader(string key, string value);
     }
 }

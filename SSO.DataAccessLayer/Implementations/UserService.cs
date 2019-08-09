@@ -2,7 +2,6 @@
 using SSO.DataAccessLayer.Interfaces;
 using SSO.DataAccessLayer.Model;
 using System.Collections.Generic;
-using System.Net.Http;
 using static SSO.DataAccessLayer.Constants.ApiConstant;
 
 namespace SSO.DataAccessLayer.Implementations
@@ -10,9 +9,14 @@ namespace SSO.DataAccessLayer.Implementations
     public class UserService : IUserService
     {
         #region Private Fields
+        private IHttpHandler _client;
+        #endregion
 
-        private readonly HttpClient _client = new HttpClient();
-
+        #region Constructor
+        public UserService(IHttpHandler httpHandler)
+        {
+            _client=httpHandler;
+        }
         #endregion
 
         #region Public methods
@@ -24,8 +28,8 @@ namespace SSO.DataAccessLayer.Implementations
         public IList<Application> GetApplications(string userId)
         {
             string url = $"{OrganizationDomain}/api/v1/users/{userId}/appLinks";
-            _client.DefaultRequestHeaders.Add(Authorization, SSWS + SSWSToken);
-            var response = _client.GetAsync(url).Result;
+            _client.AddHeader(Authorization, SSWS + SSWSToken);
+            var response = _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var json = response.Content.ReadAsStringAsync().Result;
@@ -43,8 +47,8 @@ namespace SSO.DataAccessLayer.Implementations
         public string GetUserId(string oktaAccessToken)
         {
             string userInfoApi = $"{OrganizationDomain}{UserInfo}";
-            _client.DefaultRequestHeaders.Add(Authorization, Bearer + oktaAccessToken);
-            var response = _client.GetAsync(userInfoApi).Result;
+            _client.AddHeader(Authorization, Bearer + oktaAccessToken);
+            var response = _client.GetAsync(userInfoApi);
             if (response.IsSuccessStatusCode)
             {
                 string content = response.Content.ReadAsStringAsync().Result;
