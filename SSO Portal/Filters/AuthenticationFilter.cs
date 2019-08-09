@@ -1,5 +1,4 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using static SSO.DataAccessLayer.Constants.ApiConstant;
 using SSO.DataAccessLayer.Implementations;
 using SSO.DataAccessLayer.Interfaces;
 using System;
@@ -11,7 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-
+using static SSO.DataAccessLayer.Constants.ApiConstant;
 
 namespace SSO_Portal.Filters
 {
@@ -30,21 +29,35 @@ namespace SSO_Portal.Filters
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             string userId;
-            var token = actionContext.Request.Headers.Authorization.Parameter;
-            var tokenHandler = new JwtSecurityTokenHandler();
-            if (!IsAuthorize(token))
+            var authenticationHeader = actionContext.Request.Headers.Authorization;
+            if (authenticationHeader != null)
             {
-                actionContext.Response = new HttpResponseMessage
+                var token = authenticationHeader.Parameter;
+                var tokenHandler = new JwtSecurityTokenHandler();
+                if (!IsAuthorize(token))
+                {
+                    actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        Content = new StringContent(InvalidToken)
+                    };
+                }
+                else
+                {
+                    var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+                    IList<Claim> claims = jwtToken.Claims.ToList();
+                    userId = claims[0].Value;
+                    actionContext.Request.Properties.Add(UserId, userId);
+                }
+            }
+            else
+            {
+                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
                 {
                     Content = new StringContent(InvalidToken)
                 };
             }
-            var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-            IList<Claim> claims = jwtToken.Claims.ToList();
-            userId = claims[0].Value;
-            actionContext.Request.Properties.Add(UserId,userId);
         }
-         
+
         /// <summary>
         /// To check Authorization
         /// </summary>
@@ -52,7 +65,7 @@ namespace SSO_Portal.Filters
         /// <returns></returns>
         public bool IsAuthorize(string token)
         {
-           bool result = false;
+            bool result = false;
             try
             {
                 var validationParameters = GetValidationParameters();
@@ -61,7 +74,7 @@ namespace SSO_Portal.Filters
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return result;
             }
@@ -75,7 +88,7 @@ namespace SSO_Portal.Filters
         {
             return new TokenValidationParameters()
             {
-                ValidateLifetime = true, 
+                ValidateLifetime = true,
                 ValidateAudience = false, // Because there is no audiance in the generated token
                 ValidateIssuer = false,   // Because there is no issuer in the generated token
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secret)) // The same key as the one that generate the token

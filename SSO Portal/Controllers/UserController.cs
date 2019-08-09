@@ -14,11 +14,12 @@ namespace SSO_Portal.Controllers
         private readonly IUserService _user;
         #endregion
 
+        #region  Constructor
         public UserController(IUserService userServices)
         {
             _user = userServices;
         }
-
+        #endregion
 
         #region ListOfApplication 
         /// <summary>
@@ -32,7 +33,7 @@ namespace SSO_Portal.Controllers
         {
             try
             {
-                Request.Properties.TryGetValue("userId", out object userId);
+                Request.Properties.TryGetValue(ApiConstant.UserId, out object userId);
                 if (string.IsNullOrWhiteSpace(userId.ToString()))
                 {
                     return NotFound();

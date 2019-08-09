@@ -33,6 +33,9 @@ namespace SSO_Portal.Controllers
             try
             {
                 string userId = _userService.GetUserId(accessToken);
+                if (string.IsNullOrWhiteSpace(userId))
+                    return Unauthorized();//Access token expired or invalid
+
                 string jwtToken = _authenticationService.GenerateToken(userId);
                 return Ok(jwtToken);
             }
