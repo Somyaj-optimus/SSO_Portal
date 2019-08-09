@@ -25,10 +25,14 @@ namespace SSO.DataAccessLayer.Implementations
         {
             string url = $"{OrganizationDomain}/api/v1/users/{userId}/appLinks";
             _client.DefaultRequestHeaders.Add(Authorization, SSWS + SSWSToken);
-            var GetRequestResponse = _client.GetAsync(url).Result;
-            var json = GetRequestResponse.Content.ReadAsStringAsync().Result;
-            var value = JsonConvert.DeserializeObject<List<Application>>(json);
-            return value;
+            var response = _client.GetAsync(url).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                var applications = JsonConvert.DeserializeObject<List<Application>>(json);
+                return applications;
+            }
+            return new List<Application>();
         }
 
         /// <summary>
@@ -41,9 +45,13 @@ namespace SSO.DataAccessLayer.Implementations
             string userInfoApi = $"{OrganizationDomain}{UserInfo}";
             _client.DefaultRequestHeaders.Add(Authorization, Bearer + oktaAccessToken);
             var response = _client.GetAsync(userInfoApi).Result;
-            string content = response.Content.ReadAsStringAsync().Result;
-            User user = JsonConvert.DeserializeObject<User>(content);
-            return user.Id;
+            if (response.IsSuccessStatusCode)
+            {
+                string content = response.Content.ReadAsStringAsync().Result;
+                User user = JsonConvert.DeserializeObject<User>(content);
+                return user.Id;
+            }
+            return null;
         }
         #endregion
 
