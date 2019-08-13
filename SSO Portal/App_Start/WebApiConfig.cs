@@ -13,6 +13,7 @@ namespace SSO_Portal
             // Web API configuration and services
             var json = config.Formatters.JsonFormatter;
             json.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
+
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             // Web API routes

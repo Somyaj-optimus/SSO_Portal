@@ -1,6 +1,5 @@
 ﻿using SSO.DataAccessLayer.Interfaces;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace SSO.DataAccessLayer.Implementations
 {
